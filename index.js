@@ -30,10 +30,10 @@ class Ball {
   constructor(
     x = getRandomNumber(0, environmentWidth),
     y = getRandomNumber(0, environmentHeight),
-    w = 200,
-    h = 200,
-    sx = 0.3,
-    sy = 0.3,
+    w = getRandomNumber(20, 200),
+    h = w,
+    sx = getRandomNumber(0.2, 2),
+    sy = getRandomNumber(0.2, 2),
     dx = 1,
     dy = 1,
     color = "red"
@@ -81,12 +81,7 @@ class Ball {
   }
 
   ballCollisionCheck(obj1, obj2) {
-    console.log(measureDistance(obj1, obj2));
-    if (measureDistance(obj1, obj2) <= obj1.w / 2 + obj2.w / 2) {
-      let distance = measureDistance(obj1, obj2);
-      console.log(
-        "collision ajsdlfjlsjadlfjlsdjfljsldjflajsdlfjlsjadfjlsacolllisdfljkasldfjljsdlfjl"
-      );
+    if (measureDistance(obj1, obj2) <= obj1.radius + obj2.radius) {
       let temp = obj1.dx;
       obj1.dx = obj2.dx;
       obj2.dx = temp;
@@ -101,7 +96,7 @@ class Ball {
     }
   }
 }
-const BALL_NUMBER = 2;
+const BALL_NUMBER = 3;
 let ballArrays = [];
 for (let i = 0; i < BALL_NUMBER; i++) {
   ballArrays.push(new Ball());
@@ -110,8 +105,8 @@ for (let i = 0; i < BALL_NUMBER; i++) {
 function play() {
   requestAnimationFrame(() => {
     ballArrays.forEach((ball, index) => {
-      if (ballArrays[index + 1]) {
-        ball.ballCollisionCheck(ball, ballArrays[index + 1]);
+      for (let i = index; i < ballArrays.length - 1; i++) {
+        ball.ballCollisionCheck(ball, ballArrays[i + 1]);
       }
       ball.boundryWallDetection();
       ball.moveBall();
