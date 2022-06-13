@@ -1,5 +1,5 @@
-let environmentHeight = "400";
-let environmentWidth = "600";
+let environmentHeight = window.innerHeight;
+let environmentWidth = window.innerWidth;
 let timeDelay = 2;
 const colorArray = ["red", "blue", "green", "pink", "yellow", "orange"];
 
@@ -128,16 +128,43 @@ class Ball {
       // if (obj1.sy > maxSpeed) obj1.sy = maxSpeed;
       // if (obj2.sy > maxSpeed) obj2.sy = maxSpeed;
 
-      let temp = obj1.dx;
-      obj1.dx = obj2.dx;
-      obj2.dx = temp;
-      temp = obj1.dy;
-      obj1.dy = obj2.dy;
-      obj2.dy = temp;
+      if (obj1.radius > obj2.radius) {
+        // checking if obejct 1 is larger than 80%
+        if ((obj1.radius / (obj1.radius + obj2.radius)) * 100 > 90) {
+          obj2.dx = obj1.dx;
+        } else {
+          let temp = obj1.dx;
+          obj1.dx = obj2.dx;
+          obj2.dx = temp;
+          temp = obj1.dy;
+          obj1.dy = obj2.dy;
+          obj2.dy = temp;
+        }
+      } else if (obj1.radius < obj2.radius) {
+        if ((obj2.radius / (obj1.radius + obj2.radius)) * 100 > 90) {
+          obj1.dx = obj2.dx;
+        } else {
+          let temp = obj1.dx;
+          obj1.dx = obj2.dx;
+          obj2.dx = temp;
+          temp = obj1.dy;
+          obj1.dy = obj2.dy;
+          obj2.dy = temp;
+        }
+      } else {
+        let temp = obj1.dx;
+        obj1.dx = obj2.dx;
+        obj2.dx = temp;
+        temp = obj1.dy;
+        obj1.dy = obj2.dy;
+        obj2.dy = temp;
+      }
     }
   }
 }
-const BALL_NUMBER = 100;
+
+/* A constant variable that is used to create 10 balls. */
+const BALL_NUMBER = 300;
 let ballArrays = [];
 for (let i = 0; i < BALL_NUMBER; i++) {
   ballArrays.push(new Ball(colorArray[i % 6]));
