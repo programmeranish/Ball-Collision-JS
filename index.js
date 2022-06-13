@@ -50,8 +50,8 @@ class Ball {
     h = w,
     sx = getRandomNumber(0.5, 1),
     sy = getRandomNumber(0.5, 1),
-    dx = 1,
-    dy = 1
+    dx = getRandomNumber(-1, 1),
+    dy = getRandomNumber(-1, 1)
   ) {
     this.x = x;
     this.y = y;
